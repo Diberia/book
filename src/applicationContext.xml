@@ -17,6 +17,7 @@
     <!--DAO-->
     <bean id="userDAO" class="com.atguigu.book.dao.impl.UserDAOImpl"></bean>
     <bean id="bookDAO" class="com.atguigu.book.dao.impl.BookDAOImpl"></bean>
+    <bean id="cartItemDAO" class="com.atguigu.book.dao.impl.CartItemDAOImpl"></bean>
 
     <!--service-->
     <bean id="userService" class="com.atguigu.book.service.impl.UserServiceImpl">
@@ -25,12 +26,19 @@
     <bean id="bookService" class="com.atguigu.book.service.impl.BookServiceImpl">
         <property name="bookDAO" ref="bookDAO"></property>
     </bean>
+    <bean id="cartItemService" class="com.atguigu.book.service.impl.CartItemServiceImpl">
+        <property name="cartItemDAO" ref="cartItemDAO"></property>
+    </bean>
 
     <!--controller-->
     <bean id="user" class="com.atguigu.book.controller.UserController">
         <property name="userService" ref="userService"></property>
+        <property name="cartItemService" ref="cartItemService"></property>
     </bean>
     <bean id="book" class="com.atguigu.book.controller.BookController">
         <property name="bookService" ref="bookService"></property>
+    </bean>
+    <bean id="cart" class="com.atguigu.book.controller.CartController">
+        <property name="cartItemService" ref="cartItemService"></property>
     </bean>
 </beans>
