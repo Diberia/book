@@ -6,7 +6,7 @@ public class OrderItem {
     private Integer buyCount;
     private OrderBean orderBean;//M:1
 
-    private OrderItem(){
+    public OrderItem(){
 
     }
 

@@ -18,6 +18,8 @@
     <bean id="userDAO" class="com.atguigu.book.dao.impl.UserDAOImpl"></bean>
     <bean id="bookDAO" class="com.atguigu.book.dao.impl.BookDAOImpl"></bean>
     <bean id="cartItemDAO" class="com.atguigu.book.dao.impl.CartItemDAOImpl"></bean>
+    <bean id="orderDAO" class="com.atguigu.book.dao.impl.OrderDAOImpl"></bean>
+    <bean id="orderItemDAO" class="com.atguigu.book.dao.impl.OrderItemDAOImpl"></bean>
 
     <!--service-->
     <bean id="userService" class="com.atguigu.book.service.impl.UserServiceImpl">
@@ -30,6 +32,11 @@
         <property name="cartItemDAO" ref="cartItemDAO"></property>
         <property name="bookService" ref="bookService"></property>
     </bean>
+    <bean id="orderService" class="com.atguigu.book.service.impl.OrderServiceImpl">
+        <property name="orderDAO" ref="orderDAO"></property>
+        <property name="orderItemDAO" ref="orderItemDAO"></property>
+        <property name="cartItemDAO" ref="cartItemDAO"></property>
+    </bean>
 
     <!--controller-->
     <bean id="user" class="com.atguigu.book.controller.UserController">
@@ -41,5 +48,8 @@
     </bean>
     <bean id="cart" class="com.atguigu.book.controller.CartController">
         <property name="cartItemService" ref="cartItemService"></property>
+    </bean>
+    <bean id="order" class="com.atguigu.book.controller.OrderController">
+        <property name="orderService" ref="orderService"></property>
     </bean>
 </beans>
