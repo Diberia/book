@@ -9,12 +9,14 @@ import com.atguigu.book.pojo.OrderItem;
 import com.atguigu.book.pojo.User;
 import com.atguigu.book.service.OrderService;
 
+import java.util.List;
 import java.util.Map;
 
 public class OrderServiceImpl implements OrderService {
     private OrderDAO orderDAO;
     private OrderItemDAO orderItemDAO;
     private CartItemDAO cartItemDAO;
+    private Integer getOrderTotalBookBuyCount;
 
     @Override
     public void addOrderBean(OrderBean orderBean) {
@@ -34,5 +36,15 @@ public class OrderServiceImpl implements OrderService {
             //3.购物车项表中需要删除对应的7条记录
             cartItemDAO.delCartItem(cartItem);
         }
+    }
+
+    @Override
+    public List<OrderBean> getOrderList(User user) {
+        List<OrderBean> orderBeanList = orderDAO.getOrderList(user);
+        for (OrderBean orderBean:orderBeanList){
+            Integer totalBookCount = orderDAO.getOrderTotalBookCount(orderBean);
+            orderBean.setTotalBookCount(totalBookCount);
+        }
+        return orderBeanList;
     }
 }

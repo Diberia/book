@@ -10,7 +10,7 @@ public class OrderBean {
     private User orderUser;
     private Double orderMoney;
     private Integer orderStatus;
-
+    private Integer totalBookCount;
     private List<OrderItem> orderItemList;//1:N
 
     public OrderBean() {
@@ -74,5 +74,13 @@ public class OrderBean {
 
     public void setOrderItemList(List<OrderItem> orderItemList) {
         this.orderItemList = orderItemList;
+    }
+
+    public Integer getTotalBookCount() {
+        return totalBookCount;
+    }
+
+    public void setTotalBookCount(Integer totalBookCount) {
+        this.totalBookCount = totalBookCount;
     }
 }

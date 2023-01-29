@@ -6,13 +6,14 @@ import com.atguigu.book.service.OrderService;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class OrderController {
     private OrderService orderService;
 
     //结账
-    public String checkout(HttpSession session){
+    public String checkout(HttpSession session) {
         OrderBean orderBean = new OrderBean();
         //此处编码不必要
         Date now = new Date();
@@ -23,7 +24,7 @@ public class OrderController {
         int min = now.getMinutes();
         int sec = now.getSeconds();
 
-        orderBean.setOrderNo(UUID.randomUUID().toString()+"_"+year+month+day+hour+min+sec);
+        orderBean.setOrderNo(UUID.randomUUID().toString() + "_" + year + month + day + hour + min + sec);
         orderBean.setOrderDate(now);
 
         User user = (User) session.getAttribute("currUser");
@@ -34,5 +35,17 @@ public class OrderController {
         orderService.addOrderBean(orderBean);
 
         return "index";
+    }
+
+    //查看订单列表
+    public String getOrderList(HttpSession session) {
+        User user = (User) session.getAttribute("currUser");
+
+        List<OrderBean> orderList = orderService.getOrderList(user);
+        user.setOrderList(orderList);
+
+        session.setAttribute("currUser",user);
+
+        return "order/order";
     }
 }
