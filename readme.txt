@@ -14,3 +14,14 @@
         -购物车项:图书、数量、所属用户
 
 购物车中书本数量的加减有问题，没有解决
+
+注册页面表单验证
+    1)<form>有一个事件 onsubmit
+        onsubmit="return false"，那么表单点击提交按钮时不会提交
+        onsubmit="return true"，那么表单点击提交按钮时会提交
+
+    2)获取文档中某一个结点的方式：
+        //DOM
+        // var unameTxt = document.getElementById("unameTxt");
+        //BOM
+        // document.forms[0].uname
