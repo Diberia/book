@@ -1,8 +1,6 @@
 package com.atguigu.myssm.filters;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,10 +8,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-@WebFilter(urlPatterns = {"*.do","*.html"},
-        initParams = {
-                @WebInitParam(name = "bai",value = "/page.do?operate=page&page=user/login,/user.do?null")
-        })
+//@WebFilter(urlPatterns = {"*.do","*.html"},
+//        initParams = {
+//                @WebInitParam(name = "bai",value = "/page.do?operate=page&page=user/login,/user.do?null")
+//        })
 public class sessionFilter implements Filter {
     List<String> baiList = null;
 
