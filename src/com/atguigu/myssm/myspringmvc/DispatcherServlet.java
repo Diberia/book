@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
@@ -29,9 +30,9 @@ public class DispatcherServlet extends ViewBaseServlet {
 //        beanFactory = new ClassPathXmlApplicationContext();
         ServletContext application = getServletContext();
         Object beanFactoryObj = application.getAttribute("beanFactory");
-        if(beanFactoryObj != null){
+        if (beanFactoryObj != null) {
             beanFactory = (BeanFactory) beanFactoryObj;
-        }else {
+        } else {
             throw new RuntimeException("IOC容器获取失败");
         }
 
@@ -76,21 +77,21 @@ public class DispatcherServlet extends ViewBaseServlet {
                         Parameter parameter = parameters[i];
                         String parameterName = parameter.getName();
                         //如果参数名是request,response,session，那么就不是通过请求中获取参数的方式了
-                        if("request".equals(parameterName)){
+                        if ("request".equals(parameterName)) {
                             parametersValues[i] = request;
-                        }else if ("response".equals(parameterName)){
+                        } else if ("response".equals(parameterName)) {
                             parametersValues[i] = response;
-                        }else if ("session".equals(parameterName)){
+                        } else if ("session".equals(parameterName)) {
                             parametersValues[i] = request.getSession();
-                        }else {
+                        } else {
                             //从请求中获取参数值
                             String parameterValue = request.getParameter(parameterName);
                             String typeName = parameter.getType().getName();
 
                             Object parameterObj = parameterValue;
 
-                            if(parameterObj != null){
-                                if("java.lang.Integer".equals(typeName)){
+                            if (parameterObj != null) {
+                                if ("java.lang.Integer".equals(typeName)) {
                                     parameterObj = Integer.parseInt(parameterValue);
                                 }
                             }
@@ -108,6 +109,11 @@ public class DispatcherServlet extends ViewBaseServlet {
                     if (methodReturnStr != null && methodReturnStr != "" && methodReturnStr.startsWith("redirect:")) {    //比如:redirect:fruit.do
                         String redirectStr = methodReturnStr.substring("redirect:".length());
                         response.sendRedirect(redirectStr);
+                    } else if (methodReturnStr.startsWith("json:")) {
+                        String jsonStr = methodReturnStr.substring("json:".length());
+                        PrintWriter out = response.getWriter();
+                        out.print(jsonStr);
+                        out.flush();
                     } else {
                         super.processTemplate(methodReturnStr, request, response); //比如:"edit"
                     }

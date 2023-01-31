@@ -25,3 +25,14 @@
         // var unameTxt = document.getElementById("unameTxt");
         //BOM
         // document.forms[0].uname
+
+原生的Ajax（了解）
+    1.<input type="text" name="uname" onblur="ckUname"/>
+    2.定义ckUname方法：
+        -创建XMLHttpRequest对象
+        -XMLHttpRequest对象操作步骤:
+            -open(url,"GET",true)
+            -onreadystatechange 设置回调
+            -send() 发送请求
+        -在回调函数中需要判断XMLHttpRequest对象的状态:
+            readyState(0-4),status(200)

@@ -48,3 +48,37 @@ function preRegist() {
 
     return true;
 }
+
+//如果想要发送异步请求，我们需要一个关键的对象 XMLHttpRequest
+var xmlHttpRequest;
+
+function createXMLHttpRequest() {
+    if (window.XMLHttpRequest){
+        //符合DOM2标准的浏览器，xmlHttpRequest的创建方式
+        xmlHttpRequest = new XMLHttpRequest();
+    }
+}
+
+function ckUname(uname) {
+    createXMLHttpRequest();
+    xmlHttpRequest.open("GET","user.do?operate=ckUname&uname="+uname,true);
+    // 设置回调函数
+    xmlHttpRequest.onreadystatechange = ckUnameCB;
+    //发送请求
+    xmlHttpRequest.send();
+}
+
+function ckUnameCB() {
+    if (xmlHttpRequest.readyState==4 && xmlHttpRequest.status==200){
+        //xmlHttpRequest.responseText 表示 服务器端响应给我的文本内容
+        // alert(xmlHttpRequest.responseText);
+        var responseText = xmlHttpRequest.responseText;
+        //{'uname':'1'}
+        if (responseText == "{'uname':'1'}"){
+            alert("用户名已经被注册！");
+        }else {
+            alert("用户名可以注册！");
+        }
+
+    }
+}
